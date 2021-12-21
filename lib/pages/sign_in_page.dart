@@ -32,6 +32,16 @@ class _SignInPageState extends State<SignInPage> {
           email: emailController.text, password: passwordController.text);
       if (hasil ?? false) {
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: alertColor,
+            content: const Text(
+              'Anda Gagal Login !',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
 
       setState(() {

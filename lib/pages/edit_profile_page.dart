@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/models/user_model.dart';
+import 'package:shamo/providers/auth_providers.dart';
 import 'package:shamo/shared/theme.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -6,6 +9,8 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserModel? user = authProvider.user;
     Widget customTextField(String title, String textInput) {
       return Container(
         width: double.infinity,
@@ -44,15 +49,17 @@ class EditProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ClipOval(
-              child: Image.asset(
-                'assets/image_profile.png',
+              child: Image.network(
+                '${user!.profilePhotoUrl}',
                 width: 100,
+                height: 100,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 30),
-            customTextField('Name', 'Alex keinnzal'),
-            customTextField('Username', '@alexkeinn'),
-            customTextField('Email Adress', 'alex.kein@gmail.com'),
+            customTextField('Name', '${user.name}'),
+            customTextField('Username', '@${user.username}'),
+            customTextField('Email Adress', '${user.email}'),
           ],
         ),
       );
